@@ -1,0 +1,14 @@
+---
+- name: performing gulp tasks (with direnv)
+  command: >
+    direnv invoke . node_modules/.bin/gulp {{ item }}
+    chdir={{ deploy_release_dir }}
+  with_items: deploy_gulp_tasks
+  when: deploy_with_environment is defined
+
+- name: performing gulp tasks (without direnv)
+  command: >
+    node_modules/.bin/gulp {{ item }}
+    chdir={{ deploy_release_dir }}
+  with_items: deploy_gulp_tasks
+  when: deploy_with_environment is not defined
